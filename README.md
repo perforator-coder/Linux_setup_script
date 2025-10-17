@@ -13,6 +13,6 @@ fastfetch
 lsb-release
 
 # Использование
-# cd Linux_setup_script
-# bash ./setup.sh --- С использованием lsb_release
-# bash ./setup.sh -f или --fastfetch --- Использованием fastfetch
+ cd Linux_setup_script
+ bash ./setup.sh --- С использованием lsb_release
+ bash ./setup.sh -f или --fastfetch --- Использованием fastfetch
