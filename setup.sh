@@ -1,14 +1,20 @@
 #!/bin/bash
-# изменение 17.10.25 : 
-#добавлен в arch шрифты для китайских символов
+# изменение 28.10.25 : 
+#   (Arch Linux)
+# добавлены шрифты для китайских символов 
+# добавлен шрифт для корейских символов? noto-fonts-cjk 
+# Заменена ссылка yay из git (https://aur.archlinux.org/yay.git) 
+#   (endeavoirOS)
+# удален pamac из gnome
+# gnome-browser-connector  obs-studio qbittorrent устанавливается из pacman
 # скрипт может быть не рабочим в некоторых местах
 # в планах: 
 # добавить подержку ubuntu или linux mint	
 
 
 #vers
-ver="V2.2"
-ser="unstable"
+ver="V2.2_minifix28.10"
+ser="untesting"
 #vers
 
 #petemen
@@ -205,31 +211,24 @@ case $DE in
 		case $endev_apps in
 			1)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S steam wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf --noconfirm
-				yay -S pamac
+				sudo pacman -S steam wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent --noconfirm
 				yay -S yandex-browser
-				yay -S gnome-browser-connector
 				echo -e $pu"Установка из flatpak..."$nc
-				flatpak install  org.nickvision.tubeconverter com.obsproject.Studio org.qbittorrent.qBittorrent -y
+				flatpak install  org.nickvision.tubeconverter  -y
 				;;
 			2)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S  wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf --noconfirm
-				yay -S pamac
+				sudo pacman -S  wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent --noconfirm
 				yay -S gnome-browser-connector
 				;;
 			3)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S steam wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf --noconfirm
-				yay -S pamac
+				sudo pacman -S steam wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent --noconfirm
 				yay -S yandex-browser
-				yay -S gnome-browser-connector
 				;;
 			4)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S  wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf --noconfirm
-				yay -S pamac
-				yay -S gnome-browser-connector
+				sudo pacman -S  wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent --noconfirm
 				;;
 			*)
 				;;
@@ -239,25 +238,25 @@ case $DE in
 		case $endev_apps in
 			1)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S steam wine gnome-disk-utility elisa  plasma-workspace-wallpapers timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf --noconfirm
+				sudo pacman -S steam wine gnome-disk-utility elisa  plasma-workspace-wallpapers timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent --noconfirm
 				yay -S yandex-browser
 				echo -e $pu"Установка из flatpak..."$nc
-				flatpak install org.nickvision.tubeconverter com.obsproject.Studio -y
+				flatpak install org.nickvision.tubeconverter  -y
 				;;
 			2)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S  wine gnome-disk-utility elisa plasma-workspace-wallpapers  timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf --noconfirm
+				sudo pacman -S  wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent --noconfirm
 				echo -e $pu"Установка из flatpak..."$nc
-				flatpak install  org.nickvision.tubeconverter  -y
+				flatpak install org.nickvision.tubeconverter  -y
 				;;
 			3)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S steam wine gnome-disk-utility elisa plasma-workspace-wallpapers  timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf --noconfirm
+				sudo pacman -S steam wine gnome-disk-utility elisa plasma-workspace-wallpapers  timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S  wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf --noconfirm
+				sudo pacman -S  wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent --noconfirm
 				;;
 			*)
 				;;
@@ -313,7 +312,7 @@ case $endev_samba in
 		firewall-cmd --permanent --add-service={samba,samba-client,samba-dc} --zone=public
 		echo -e $pu"Cервис добавлен в public"$nc
 		echo -e $pu"Настройка samba..."$nc
-		sudo mkdir /var/lib/samba/usershares
+		sudo mkdir /var/lib/samba/usershares # не хватает вроде ещё директорий
 		sudo mkdir /usr/samba
 		sudo mkdir /usr/samba/var
 		echo -e $pu"Добавление группы sambashare и добавление пользователя в неё..."$nc
@@ -336,7 +335,7 @@ esac
 # sftp
 case $endev_ssh in
 	yes|y)
-		read -p "Выполните настройку конфига"
+		read -p "Выполните настройку конфига" 
 		echo -e $pu"Переход в конфиг..."$nc
 		sudo nano /etc/ssh/sshd_config
 		read -p "Был изменен порт? (y/n)" port
@@ -890,8 +889,8 @@ case $arch_samba in
 				;;
 			*)
 				;;
-		esac
-                sudo mkdir /var/lib/samba/usershares
+		esac                 
+                sudo mkdir /var/lib/samba/usershares #                                                                        
                 sudo mkdir /usr/samba
                 sudo mkdir /usr/samba/var
                 echo -e $cy"Добавление группы sambashare и добавление пользователя в неё..."$nc
@@ -973,23 +972,23 @@ case $DE in
 		case $arch_apps in
 			1)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S steam wine   resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf --noconfirm
+				sudo pacman -S steam wine   resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk --noconfirm
 				yay -S yandex-browser
 				echo -e $cy"Установка из flatpak..."$nc
 				flatpak install  org.nickvision.tubeconverter com.obsproject.Studio org.qbittorrent.qBittorrent -y
 				;;
 			2)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S  wine  resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf --noconfirm
+				sudo pacman -S  wine  resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk --noconfirm
 				;;
 			3)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S steam wine resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf--noconfirm
+				sudo pacman -S steam wine resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk  --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S  wine resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf --noconfirm
+				sudo pacman -S  wine resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk --noconfirm
 				;;
 			*)
 				;;
@@ -999,7 +998,7 @@ case $DE in
 		case $arch_apps in
 			1)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S steam wine gnome-disk-utility elisa  plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra  ttf-liberation wqy-zenhei systemd-resolvconf --noconfirm
+				sudo pacman -S steam wine gnome-disk-utility elisa  plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra  ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk --noconfirm
 				yay -S yandex-browser
 				echo -e $cy"Установка из flatpak..."$nc
 				flatpak install org.nickvision.tubeconverter com.obsproject.Studio -y
@@ -1007,18 +1006,18 @@ case $DE in
 			2)
 				echo -e $cy"Установка из pacman..."$nc
 				yay -S yandex-browser
-				sudo pacman -S  wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra  ttf-liberation wqy-zenhei systemd-resolvconf --noconfirm
+				sudo pacman -S  wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra  ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk --noconfirm
 				echo -e $cy"Установка из flatpak..."$nc
 				flatpak install  org.nickvision.tubeconverter  -y
 				;;
 			3)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S steam wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei systemd-resolvconf --noconfirm
+				sudo pacman -S steam wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S  wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra  ttf-liberation wqy-zenhei systemd-resolvconf --noconfirm
+				sudo pacman -S  wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra  ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk --noconfirm
 				;;
 			*)
 				;;
