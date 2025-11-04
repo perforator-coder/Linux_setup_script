@@ -22,3 +22,9 @@ lsb-release
 
  bash ./setup.sh -f или --fastfetch --- Использованием 
  fastfetch
+ 
+ bash ./setup.sh -fsDE || --fastfetch-set-DE  --- установить вручную DE остальное через fastfetch
+ 
+ bash ./setup.sh -lsbsDE || --lsb-release-set-DE 
+ 
+ bash ./setup.sh -fsDE -g||-gnome||-k||-kde --- установить kde или gnome соответственно

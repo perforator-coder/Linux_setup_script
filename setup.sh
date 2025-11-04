@@ -1,24 +1,64 @@
 #!/bin/bash
-# изменение 28.10.25 : 
+# изменение 04.11.25 :
+#	(В работе скрипта)
+# Добавлены переменые для ручного выбора DE 
+# чтобы выбрать -lsbsDE -g ----gnome c lsb
+# -fsDE -k -----kde с fastfetch
 #   (Arch Linux)
-# добавлены шрифты для китайских символов 
-# добавлен шрифт для корейских символов? noto-fonts-cjk 
-# Заменена ссылка yay из git (https://aur.archlinux.org/yay.git) 
+# Список пакетов переписан в масивы смотрите в massAppList
+# Удален вопрос на перезагрузку в установке flatpak  
 #   (endeavoirOS)
-# удален pamac из gnome
-# gnome-browser-connector  obs-studio qbittorrent устанавливается из pacman
-# скрипт может быть не рабочим в некоторых местах
+# Список пакетов переписан в масивы смотрите в massAppList
+# 
+#
+#	(Opensuse Tumbleweed) (Код заброшен)
+# Изменений нет 
+# !!!!скрипт может быть не рабочим в некоторых местах!!!!
 # в планах: 
 # добавить подержку ubuntu или linux mint	
 
 
 #vers
-ver="V2.2_minifix28.10"
-ser="untesting"
+ver="V2.3_04.11"
+ser="testing"
 #vers
 
 #petemen
 case $1 in 
+	-fsDE|--fastfetch-set-DE)
+			case $2 in
+			-g|--gnome)
+				#OS_fastfetch
+				function my_os {
+				fastfetch | grep -ohm1 "EndeavourOS\|openSUSE Tumbleweed\|Arch Linux"
+				}
+				OS=$(my_os)
+				#OS_fastfetch
+				DE=GNOME
+
+				#fastfetch
+				OS_info="fastfetch"
+				#fastfetch
+				;;
+			-k|--kde)
+				#OS_fastfetch
+				function my_os {
+				fastfetch | grep -ohm1 "EndeavourOS\|openSUSE Tumbleweed\|Arch Linux"
+				}
+				OS=$(my_os)
+				#OS_fastfetch
+				DE=KDE
+
+				#fastfetch
+				OS_info="fastfetch"
+				#fastfetch
+				;;
+			*)
+				echo "Ошибка должен быть 2-й параметр с DE"
+				exit
+				;;
+			esac
+		;;
 	-f|--fastfetch)
 		#OS_fastfetch
 		function my_os {
@@ -37,9 +77,43 @@ case $1 in
 		#fastfetch
 		OS_info="fastfetch"
 		#fastfetch
-
 		;;
-	*)
+	-lsbsDE|--lsb-release-set-DE)
+			case $2 in
+				-g|--gnome)
+					#OS_lsb
+					function my_os {
+					lsb_release -a | grep -ohm1 "EndeavourOS Linux\|openSUSE Tumbleweed\|Arch Linux"
+					}
+					OS=$(my_os)
+					#OS_lsb
+					DE=GNOME
+
+					#lsb_release
+					OS_info="lsb_release"
+					#lsb_release
+					;;
+				-k|--kde)
+					#OS_lsb
+					function my_os {
+					lsb_release -a | grep -ohm1 "EndeavourOS Linux\|openSUSE Tumbleweed\|Arch Linux"
+					}
+					OS=$(my_os)	
+					#OS_lsb
+					DE=KDE
+
+					#lsb_release
+					OS_info="lsb_release"
+					#lsb_release
+					;;
+				*)
+					echo "Ошибка должен быть 2-й параметр с DE"
+					exit
+					;;
+
+			esac
+		;;
+	*|-lsb|--lsb-release)
 		#OS_lsb
 		function my_os {
 		lsb_release -a | grep -ohm1 "EndeavourOS Linux\|openSUSE Tumbleweed\|Arch Linux"
@@ -67,6 +141,41 @@ nc=$"\033[0m"
 ge=$"\033[0;32m"
 cy=$"\033[0;36m"
 #colors
+
+
+#massAppList
+	#arch
+	arch_Full_gnome=("steam" "wine" "resources" "timeshift" "power-profiles-daemon" "xorg-mkfontscale" "xorg-fonts-cyrillic" "xorg-fonts-misc" "unrar" "gamemode" "terminus-font" "ttf-dejavu" "noto-fonts" "noto-fonts-extra" "ttf-liberation" "wqy-zenhei" "gnome-browser-connector" "systemd-resolvconf" "noto-fonts-cjk" "obs-studio" "qbittorrent")
+	arch_Full_KDE=("steam" "wine" "gnome-disk-utility" "elisa" "plasma-workspace-wallpapers" "timeshift" "power-profiles-daemon" "xorg-mkfontscale" "xorg-fonts-cyrillic" "xorg-fonts-misc" "unrar" "gamemode" "terminus-font" "ttf-dejavu noto-fonts" "noto-fonts-extra" "ttf-liberation" "wqy-zenhei" "systemd-resolvconf" "noto-fonts-cjk" "obs-studio" "qbittorrent")
+
+	arch_Min_gnome=(wine resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk)
+	# ДА ,можно было без ковычек
+	arch_Min_KDE=(wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra  ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk)
+
+	arch_Full_noflat_gnome=(steam wine resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk)
+	arch_Full_noflat_KDE=(steam wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk)
+
+	arch_Min_noflat_gnome=(wine resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk)
+	arch_Min_noflat_KDE=(wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra  ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk)
+	#arch
+
+	#endev
+	endev_Full_gnome=(steam wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent)
+	endev_Full_KDE=(steam wine gnome-disk-utility elisa  plasma-workspace-wallpapers timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent)
+
+	endev_Min_gnome=(wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent)
+	endev_Min_KDE=(wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent)
+	
+	endev_Full_noflat_gnome=(steam wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent)
+	endev_Full_noflat_KDE=(steam wine gnome-disk-utility elisa plasma-workspace-wallpapers  timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent)
+	
+	endev_Min_noflat_gnome=( wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent)
+	endev_Min_noflat_KDE=(wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent)
+	#endev
+
+#massAppList
+
+
 
 #endev
 function endev_set {
@@ -211,24 +320,24 @@ case $DE in
 		case $endev_apps in
 			1)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S steam wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent --noconfirm
+				sudo pacman -S ${endev_Full_gnome[@]} --noconfirm
 				yay -S yandex-browser
 				echo -e $pu"Установка из flatpak..."$nc
 				flatpak install  org.nickvision.tubeconverter  -y
 				;;
 			2)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S  wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent --noconfirm
+				sudo pacman -S ${endev_Min_gnome[@]} --noconfirm
 				yay -S gnome-browser-connector
 				;;
 			3)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S steam wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent --noconfirm
+				sudo pacman -S ${endev_Full_noflat_gnome[@]} --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S  wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent --noconfirm
+				sudo pacman -S ${endev_Full_noflat_gnome[@]} --noconfirm
 				;;
 			*)
 				;;
@@ -238,25 +347,25 @@ case $DE in
 		case $endev_apps in
 			1)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S steam wine gnome-disk-utility elisa  plasma-workspace-wallpapers timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent --noconfirm
+				sudo pacman -S  ${endev_Full_KDE[@]} --noconfirm
 				yay -S yandex-browser
 				echo -e $pu"Установка из flatpak..."$nc
 				flatpak install org.nickvision.tubeconverter  -y
 				;;
 			2)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S  wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent --noconfirm
+				sudo pacman -S ${endev_Min_KDE[@]} --noconfirm
 				echo -e $pu"Установка из flatpak..."$nc
 				flatpak install org.nickvision.tubeconverter  -y
 				;;
 			3)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S steam wine gnome-disk-utility elisa plasma-workspace-wallpapers  timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent --noconfirm
+				sudo pacman -S ${endev_Full_noflat_KDE[@]} --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S  wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent --noconfirm
+				sudo pacman -S  ${endev_Min_noflat_KDE[@]} --noconfirm
 				;;
 			*)
 				;;
@@ -735,19 +844,7 @@ case $arch_flat in
 				;;
 			GNOME)
 				;;
-		esac
-		echo -e $cy"Добавление репозитория flatpak..."$nc
-		flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-		echo -e $cy"Нужна перезагрузка"$nc
-		read -p "Перезагрузится?(yes/no)" reboot
-		case $reboot in
-			yes)
-				sudo reboot
-				exit
-				;;
-			*)
-				;;
-		esac
+		esac ##!!!
 		;;
 	*)
 		;;
@@ -972,23 +1069,23 @@ case $DE in
 		case $arch_apps in
 			1)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S steam wine   resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk obs-studio qbittorrent --noconfirm
+				sudo pacman -S ${arch_Full_gnome[@]} --noconfirm
 				yay -S yandex-browser
 				echo -e $cy"Установка из flatpak..."$nc
 				flatpak install  org.nickvision.tubeconverter  -y
 				;;
 			2)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S  wine  resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk --noconfirm
+				sudo pacman -S ${arch_Min_gnome[@]} --noconfirm
 				;;
 			3)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S steam wine resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk  --noconfirm
+				sudo pacman -S ${arch_Full_noflat_gnome[@]} --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S  wine resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk --noconfirm
+				sudo pacman -S ${arch_Min_noflat_gnome[@]} --noconfirm
 				;;
 			*)
 				;;
@@ -998,7 +1095,7 @@ case $DE in
 		case $arch_apps in
 			1)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S steam wine gnome-disk-utility elisa  plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra  ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk obs-studio --noconfirm
+				sudo pacman -S ${arch_Full_KDE[@]} --noconfirm
 				yay -S yandex-browser
 				echo -e $cy"Установка из flatpak..."$nc
 				flatpak install org.nickvision.tubeconverter -y
@@ -1006,18 +1103,18 @@ case $DE in
 			2)
 				echo -e $cy"Установка из pacman..."$nc
 				yay -S yandex-browser
-				sudo pacman -S  wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra  ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk --noconfirm
+				sudo pacman -S ${arch_Min_KDE[@]} --noconfirm
 				echo -e $cy"Установка из flatpak..."$nc
 				flatpak install  org.nickvision.tubeconverter  -y
 				;;
 			3)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S steam wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk --noconfirm
+				sudo pacman -S ${arch_Full_noflat_KDE[@]} --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S  wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra  ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk --noconfirm
+				sudo pacman -S ${arch_Min_noflat_KDE[@]} --noconfirm
 				;;
 			*)
 				;;
@@ -1064,8 +1161,7 @@ case $OS in
 	openSUSE\ Tumbleweed)
 			opensuse_tumb_ins
 		;;
-	Arch\ Linux)
-			
+	Arch\ Linux)	
 			arch_install
 		;;
 	*)
