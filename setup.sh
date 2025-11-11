@@ -1,5 +1,5 @@
 #!/bin/bash
-# изменение 04.11.25 :
+# изменение 11.11.25 :
 #	(В работе скрипта)
 # Добавлены переменые для ручного выбора DE 
 # чтобы выбрать -lsbsDE -g ----gnome c lsb
@@ -7,9 +7,10 @@
 #   (Arch Linux)
 # Список пакетов переписан в масивы смотрите в massAppList
 # Удален вопрос на перезагрузку в установке flatpak  
+# при установки приложений используется флаги --needed и --noconfirm
 #   (endeavoirOS)
 # Список пакетов переписан в масивы смотрите в massAppList
-# 
+# при установки приложений используется флаги --needed и --noconfirm
 #
 #	(Opensuse Tumbleweed) (Код заброшен)
 # Изменений нет 
@@ -207,7 +208,7 @@ clear
 case $endev_blut in
 	yes|y)
 		echo -e $pu"Включаю передачю файлов по Bluetooth..."$nc
-		sudo pacman -S bluez-obex --noconfirm
+		sudo pacman -S --needed bluez-obex --noconfirm
 		systemctl --user start obex.service
 		systemctl --user enable obex.service
 		sudo systemctl enable bluetooth
@@ -248,7 +249,7 @@ case $endev_flatpak in
 		echo -e $pu"Запуск полного обновления..."$nc
 		sudo pacman -Syu --noconfirm
 		echo -e $pu"Установка flatpak..."$nc
-		sudo pacman -S flatpak --noconfirm
+		sudo pacman -S --needed flatpak --noconfirm
 		case $DE in
 			KDE)
 				sudo pacman -S flatpak-kcm --noconfirm
@@ -278,7 +279,7 @@ esac
 case $endev_virtualbox in
 	yes|y)
 		echo -e $pu"Установка virtualbox..."$nc
-		sudo pacman -S virtualbox virtualbox-guest-iso
+		sudo pacman -S --needed virtualbox virtualbox-guest-iso --noconfirm
 		sudo usermod -a -G vboxusers $USER
 		;;
 	*)
@@ -290,7 +291,7 @@ esac
 case $endev_qemu in
 	yes|y)
 		echo -e $pu"Установка qemu..."$nc
-		sudo pacman -S qemu virt-manager libvirt
+		sudo pacman -S --needed qemu virt-manager libvirt --noconfirm
 		systemctl enable --now libvirtd
 		;;
 	*)
@@ -302,7 +303,7 @@ esac
 case $endev_grub in
 	yes|y)
 		echo -e $pu"Установка grub-btrfs..."$nc
-		sudo pacman -S grub-btrfs timeshift inotify-tools --noconfirm
+		sudo pacman -S --needed grub-btrfs timeshift inotify-tools --noconfirm
 		sudo systemctl enable --now cronie.service
 		read -p "ВНИМАНИЕ! нужно заменить /.snapshots на !(--timeshift-auto)!"
 		sudo systemctl edit --full grub-btrfsd
@@ -320,24 +321,24 @@ case $DE in
 		case $endev_apps in
 			1)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S ${endev_Full_gnome[@]} --noconfirm
+				sudo pacman -S --needed ${endev_Full_gnome[@]} --noconfirm
 				yay -S yandex-browser
 				echo -e $pu"Установка из flatpak..."$nc
 				flatpak install  org.nickvision.tubeconverter  -y
 				;;
 			2)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S ${endev_Min_gnome[@]} --noconfirm
+				sudo pacman -S --needed ${endev_Min_gnome[@]} --noconfirm
 				yay -S gnome-browser-connector
 				;;
 			3)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S ${endev_Full_noflat_gnome[@]} --noconfirm
+				sudo pacman -S --needed ${endev_Full_noflat_gnome[@]} --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S ${endev_Full_noflat_gnome[@]} --noconfirm
+				sudo pacman -S --needed ${endev_Full_noflat_gnome[@]} --noconfirm
 				;;
 			*)
 				;;
@@ -347,25 +348,25 @@ case $DE in
 		case $endev_apps in
 			1)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S  ${endev_Full_KDE[@]} --noconfirm
+				sudo pacman -S --needed ${endev_Full_KDE[@]} --noconfirm
 				yay -S yandex-browser
 				echo -e $pu"Установка из flatpak..."$nc
 				flatpak install org.nickvision.tubeconverter  -y
 				;;
 			2)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S ${endev_Min_KDE[@]} --noconfirm
+				sudo pacman -S --needed ${endev_Min_KDE[@]} --noconfirm
 				echo -e $pu"Установка из flatpak..."$nc
 				flatpak install org.nickvision.tubeconverter  -y
 				;;
 			3)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S ${endev_Full_noflat_KDE[@]} --noconfirm
+				sudo pacman -S --needed ${endev_Full_noflat_KDE[@]} --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S  ${endev_Min_noflat_KDE[@]} --noconfirm
+				sudo pacman -S --needed ${endev_Min_noflat_KDE[@]} --noconfirm
 				;;
 			*)
 				;;
@@ -383,7 +384,7 @@ case $endev_nvidia in
 		case $DE in
 			GNOME)
 				echo -e $pu"Установка switcheroo-control..."$nc
-				sudo pacman -S switcheroo-control --noconfirm
+				sudo pacman -S --needed switcheroo-control --noconfirm
 				sudo systemctl enable switcheroo-control
 				exit
 				;;
@@ -392,7 +393,7 @@ case $endev_nvidia in
 				case  $nvidia in
 					1)
 						echo -e $pu"Установка switcheroo-control..."$nc
-						sudo pacman -S switcheroo-control --noconfirm
+						sudo pacman -S --needed switcheroo-control --noconfirm
 						sudo systemctl enable switcheroo-control
 						exit
 						;;
@@ -416,7 +417,7 @@ esac
 case $endev_samba in
 	yes|y)
 		echo -e $pu"Установка Samba если необходимо..."$nc
-		sudo pacman -S samba --needed
+		sudo pacman -S --needed samba --needed
 		echo -e $pu"Настройка фаервола..."
 		firewall-cmd --permanent --add-service={samba,samba-client,samba-dc} --zone=public
 		echo -e $pu"Cервис добавлен в public"$nc
@@ -468,7 +469,7 @@ esac
 case $endev_zram in 
 	yes|y)
 			echo -e $pu"Установка zram-generator..."$nc
-			sudo pacman -S zram-generator --noconfirm
+			sudo pacman -S --needed zram-generator --noconfirm
 			read -p "Нужно вписать в конфиг минимум [zram0], и если надо размер файла подкачки"
 			sudo nano /etc/systemd/zram-generator.conf
 			echo -e $pu"Рекомендуется перезагрузка"$nc
@@ -479,7 +480,6 @@ esac
 #zram
 
 }
-
 #endev
 
 #opensuse_tumb
@@ -805,8 +805,10 @@ clear
 #blut
 case $arch_bluz in
 	yes|y)
+		echo -e $cy"Установка из Pacman..."$nc
+		sudo pacman -S --needed bluez bluez-utils --noconfirm 
 		echo -e $cy"Включаю передачю файлов по Bluetooth..."$nc
-		sudo pacman -S bluez-obex --noconfirm
+		sudo pacman -S --needed bluez-obex --noconfirm
 		systemctl --user start obex.service
 		systemctl --user enable obex.service
 		sudo systemctl enable bluetooth
@@ -837,14 +839,14 @@ case $arch_flat in
 		echo -e $cy"Запуск полного обновления..."$nc
 		sudo pacman -Syu --noconfirm
 		echo -e $cy"Установка flatpak..."$nc
-		sudo pacman -S flatpak --noconfirm
+		sudo pacman -S --needed flatpak --noconfirm
 		case $DE in
 			KDE)
-				sudo pacman -S flatpak-kcm --noconfirm
+				sudo pacman -S --needed flatpak-kcm --noconfirm
 				;;
 			GNOME)
 				;;
-		esac ##!!!
+		esac 
 		;;
 	*)
 		;;
@@ -855,13 +857,13 @@ esac
 case $arch_fire in
 	1)
 		echo -e $cy"Установка ufw..."$nc
-		sudo pacman -S ufw 
+		sudo pacman -S --needed ufw --noconfirm
 		sudo systemctl enable ufw
 		sudo systemctl start ufw
 		;;
 	2)
 		echo -e $cy"Установка firewalld..."$nc
-		sudo pacman -S firewalld
+		sudo pacman -S --needed firewalld --noconfirm
 		sudo systemctl enable firewalld
 		sudo systemctl start firewalld 
 		;;
@@ -874,7 +876,7 @@ esac
 case $arch_btrfs in
 	yes|y)
 		echo -e $cy"Установка grub-btrfs..."$nc
-		sudo pacman -S grub-btrfs timeshift inotify-tools --noconfirm
+		sudo pacman -S --needed grub-btrfs timeshift inotify-tools --noconfirm
 		sudo systemctl enable --now cronie.service
 		read -p "ВНИМАНИЕ! нужно заменить /.snapshots на !(--timeshift-auto)!"
 		sudo systemctl edit --full grub-btrfsd
@@ -892,15 +894,15 @@ case $arch_nvidia_prime in
 		case $DE in
 			GNOME)
 				echo -e $cy"Установка nvidia..."$nc
-				sudo pacman -S nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl --noconfirm
+				sudo pacman -S --needed nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl --noconfirm
 				echo -e $cy"Установка switcheroo-control..."$nc
-				sudo pacman -S switcheroo-control --noconfirm
+				sudo pacman -S --needed switcheroo-control --noconfirm
 				sudo systemctl enable switcheroo-control
 				read -p "Установить envycontrol?(yes/no)" arch_envy
 				case $arch_envy in
 					yes|y)
 						echo -e $cy"Устанвливаю envycontrol..."$nc
-						yay -S envycontrol
+						yay -S --needed envycontrol --noconfirm
 						;;
 					*)
 						;;
@@ -908,12 +910,12 @@ case $arch_nvidia_prime in
 				;;
 			KDE)
 				echo -e $cy"Устанавливаю nvidia..."$nc
-				sudo pacman -S nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl --noconfirm
+				sudo pacman -S --needed nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl --noconfirm
 				read -p "Что установить? (1-switcheroo-control 2-optimus-manager)" nvidia_answer
 				case  $nvidia_answer in
 					1)
 						echo -e $cy"Установка switcheroo-control..."$nc
-						sudo pacman -S switcheroo-control --noconfirm
+						sudo pacman -S --needed switcheroo-control --noconfirm
 						sudo systemctl enable switcheroo-control
 						exit
 						;;
@@ -939,15 +941,15 @@ esac
 case $arch_video in
 	1)
 		echo -e $cy"Установка amd драйверов..."$nc
-		sudo pacman -S lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader --noconfirm
+		sudo pacman -S --needed lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader --noconfirm
 		;;
 	2)
 		echo -e $cy"Установка intel драйверов..."$nc
-		sudo pacman -S lib32-mesa vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader intel-media-driver libva-intel-driver xf86-video-intel --noconfirm
+		sudo pacman -S --needed lib32-mesa vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader intel-media-driver libva-intel-driver xf86-video-intel --noconfirm
 		;;
 	3)
 		echo -e $cy"Установка nvidia драйверов..."$nc
-		sudo pacman -S nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl --noconfirm
+		sudo pacman -S --needed nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl --noconfirm
 		;;
 esac
 #video_der
@@ -956,7 +958,7 @@ esac
 case $arch_zram in 
 	yes|y)
 			echo -e $cy"Установка zram-generator..."$nc
-			sudo pacman -S zram-generator --noconfirm
+			sudo pacman -S --needed zram-generator --noconfirm
 			read -p "Нужно вписать в конфиг минимум [zram0], и если надо размер файла подкачки"
 			sudo nano /etc/systemd/zram-generator.conf
 			echo -e $cy"Рекомендуется перезагрузка"$nc
@@ -970,7 +972,7 @@ esac
 case $arch_samba in
         yes|y)
                 echo -e $cy"Установка Samba если необходимо..."$nc
-                sudo pacman -S samba --needed
+                sudo pacman -S --needed samba --needed
 		read -p "Какой фаервол установлен?(1-ufw 2-firewalld)" arch_samba_fire
 		case $arch_samba_fire in
 			1)
@@ -1069,23 +1071,23 @@ case $DE in
 		case $arch_apps in
 			1)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S ${arch_Full_gnome[@]} --noconfirm
+				sudo pacman -S --needed ${arch_Full_gnome[@]} --noconfirm
 				yay -S yandex-browser
 				echo -e $cy"Установка из flatpak..."$nc
 				flatpak install  org.nickvision.tubeconverter  -y
 				;;
 			2)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S ${arch_Min_gnome[@]} --noconfirm
+				sudo pacman -S --needed ${arch_Min_gnome[@]} --noconfirm
 				;;
 			3)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S ${arch_Full_noflat_gnome[@]} --noconfirm
+				sudo pacman -S --needed ${arch_Full_noflat_gnome[@]} --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S ${arch_Min_noflat_gnome[@]} --noconfirm
+				sudo pacman -S --needed ${arch_Min_noflat_gnome[@]} --noconfirm
 				;;
 			*)
 				;;
@@ -1095,7 +1097,7 @@ case $DE in
 		case $arch_apps in
 			1)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S ${arch_Full_KDE[@]} --noconfirm
+				sudo pacman -S --needed ${arch_Full_KDE[@]} --noconfirm
 				yay -S yandex-browser
 				echo -e $cy"Установка из flatpak..."$nc
 				flatpak install org.nickvision.tubeconverter -y
@@ -1103,18 +1105,18 @@ case $DE in
 			2)
 				echo -e $cy"Установка из pacman..."$nc
 				yay -S yandex-browser
-				sudo pacman -S ${arch_Min_KDE[@]} --noconfirm
+				sudo pacman -S --needed ${arch_Min_KDE[@]} --noconfirm
 				echo -e $cy"Установка из flatpak..."$nc
 				flatpak install  org.nickvision.tubeconverter  -y
 				;;
 			3)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S ${arch_Full_noflat_KDE[@]} --noconfirm
+				sudo pacman -S --needed ${arch_Full_noflat_KDE[@]} --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S ${arch_Min_noflat_KDE[@]} --noconfirm
+				sudo pacman -S --needed ${arch_Min_noflat_KDE[@]} --noconfirm
 				;;
 			*)
 				;;
@@ -1130,7 +1132,7 @@ esac
 case $arch_virtual in
 	yes|y)
 		echo -e $cy"Установка virtualbox..."$nc
-		sudo pacman -S virtualbox virtualbox-guest-iso
+		sudo pacman -S --needed virtualbox virtualbox-guest-iso --noconfirm
 		sudo usermod -a -G vboxusers $USER
 		;;
 	*)
@@ -1142,7 +1144,7 @@ esac
 case $arch_qemu in
 	yes|y)
 		echo -e $cy"Установка qemu..."$nc
-		sudo pacman -S qemu virt-manager libvirt dnsmasq
+		sudo pacman -S --needed qemu virt-manager libvirt dnsmasq --noconfirm
 		systemctl enable --now libvirtd
 		;;
 	*)
