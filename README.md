@@ -1,7 +1,7 @@
 <h1 align="center"> Linux_setup_script </a>
 
- <span style='color:red;' align="center">!Нестабильная и не тестированая ветка!</span>
- 
+ <span style='color:red;'>!Нестабильная и не тестированая ветка!</span>
+
 Простой скрип для настройки linux дистрибутивов
 
 СКРИПТ МОЖЕТ НЕ РАБОТАТЬ В НЕКОТОРЫХ МЕСТАХ
@@ -18,7 +18,7 @@
 fastfetch
 lsb-release
 
- <h1 align="center">Использование</a>
+ <h1 align="center">Использование:</a>
 
 cd Linux_setup_script
 
