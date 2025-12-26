@@ -1,6 +1,6 @@
 <h1 align="center"> Linux_setup_script </a>
 
- <span style='color:red;'> !Нестабильная и не тестированая ветка! </span>
+<h1 align="center">  !Нестабильная и не тестированая ветка! </a>
 
 Простой скрип для настройки linux дистрибутивов
 
