@@ -1,6 +1,6 @@
-<h1 align="center"> Linux_setup_script </a>
+<center> Linux_setup_script </center>
 
-<h1 align="center">  !Нестабильная и не тестированая ветка! </a>
+  **<span style="color: red;">!Нестабильная и не тестированая ветка!</span>** 
 
 Простой скрип для настройки linux дистрибутивов
 
@@ -13,12 +13,12 @@
 Он поможит настроить Arch linux/EndeavourOS/OpenSUSE Tumbleweed(Старый, не тестированый код)
 
 
-> Зависимости:
+ # <center>  Зависимости: <center>
 
 fastfetch
 lsb-release
 
- <h1 align="center"> Использование: </a>
+ Использование: 
 
 cd Linux_setup_script
 
