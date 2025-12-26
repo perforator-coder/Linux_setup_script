@@ -1,27 +1,27 @@
 #!/bin/bash
-# изменение 11.11.25 :
+# изменение 26.12.25 :
 #	(В работе скрипта)
-# Добавлены переменые для ручного выбора DE 
-# чтобы выбрать -lsbsDE -g ----gnome c lsb
-# -fsDE -k -----kde с fastfetch
+# 	Нет изменений 
+# 
+# 
 #   (Arch Linux)
-# Список пакетов переписан в масивы смотрите в massAppList
-# Удален вопрос на перезагрузку в установке flatpak  
-# при установки приложений используется флаги --needed и --noconfirm
+# Добавлен вопрос на установку plymouth
+#   
+# 
 #   (endeavoirOS)
-# Список пакетов переписан в масивы смотрите в massAppList
-# при установки приложений используется флаги --needed и --noconfirm
+# 	Нет изменений
+# 
 #
 #	(Opensuse Tumbleweed) (Код заброшен)
-# Изменений нет 
+# 	Изменений нет 
 # !!!!скрипт может быть не рабочим в некоторых местах!!!!
 # в планах: 
-# добавить подержку ubuntu или linux mint	
+# добавить подержку ubuntu	
 
 
 #vers
-ver="V2.3_04.11"
-ser="testing"
+ver="V2.3_26.12.25"
+ser="unstable"
 #vers
 
 #petemen
@@ -795,6 +795,7 @@ read -p "Установить драйвер на видеокарту?(1-amd,2-
 read -p "Установить zram?(yes/no)" arch_zram
 read -p "Установить samba?(yes/no)" arch_samba
 read -p "Настроить ssh?(yes/no)" arch_ssh
+read -p "Установить Plymouth для графической загрузки?(yes/no)" arch_plym
 read -p "Установить подержку wallpaper engine?(yes/no)" arch_wall_eng
 read -p "Какой пакет программ установить?(1-Полный,2-Минимальный,3-Полный без flatpak,4-минимальный без flatpak)?" arch_apps
 read -p "Установить Virtualbox?(yes/no)" arch_virtual 
@@ -1039,6 +1040,61 @@ case $arch_ssh in
                 ;;
 esac
 # sftp
+
+# plymouth
+	case $arch_plym in
+		yes|y)
+			echo -e $cy"Установка из pacman..."$nc
+			sudo pacman -S plymouth --noconfirm
+			read -p "Что стоит для создания начального образа загрузки?(1-mkinitcpio,2-dracut)" arch_boot_sec
+			case $arch_boot_sec in
+				1)
+					read -p "Нужно вставить в HOOKS дополнительно plymouth...."
+					echo "Открываю /etc/mkinitcpio.conf"
+					sudo nano /etc/mkinitcpio.conf
+					read -p "Нужно изменить параметры загрузки ядра. Добавте в напротив GRUB_CMDLINE_LINUX_DEFAULT quiet splash"
+					echo "Открываю /etc/default/grub"
+					sudo nano /etc/default/grub
+					read -p "Пересобрать mkinit?(yes/no)" arch_recomp
+					case $arch_recomp in 
+						yes|y)
+							echo -e $cy"Пересобираю grub..."$nc
+							sudo grub-mkconfig -o /boot/grub/grub.cfg
+							echo -e $cy"Пересобираю mkinit..."$nc
+							sudo mkinitcpio -P
+							;;
+						*)
+							;;
+					esac	
+
+				;;
+				2)
+					read -p "Нужно вставить в add_dracutmodules+= дополнительно plymouth...."
+					echo "Открываю /etc/dracut.conf.d/myflags.conf"
+					sudo nano /etc/dracut.conf.d/myflags.conf
+					read -p "Нужно изменить параметры загрузки ядра. Добавте в напротив GRUB_CMDLINE_LINUX_DEFAULT quiet splash"
+					echo "Открываю /etc/default/grub"
+					sudo nano /etc/default/grub
+					read -p "Пересобрать dracut?(yes/no)" arch_recomp
+					case $arch_recomp in 
+						yes|y)
+							echo -e $cy"Пересобираю grub..."$nc
+							sudo grub-mkconfig -o /boot/grub/grub.cfg
+							echo -e $cy"Пересобираю dracut..."$nc
+							sudo dracut --force --regenerate-all
+							;;
+						*)
+							;;
+					esac
+				;;
+				*)
+				;;
+			esac	
+			;;
+		*)
+			;;
+	esac		
+# plymouth
 
 #wallp_eng
 case $DE in
