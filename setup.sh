@@ -133,11 +133,11 @@ cy=$"\033[0;36m"
 
 #massAppList
 	#arch
-	arch_Full_gnome=("steam" "wine" "resources" "timeshift" "power-profiles-daemon" "xorg-mkfontscale" "xorg-fonts-cyrillic" "xorg-fonts-misc" "unrar" "gamemode" "terminus-font" "ttf-dejavu" "noto-fonts" "noto-fonts-extra" "ttf-liberation" "wqy-zenhei" "gnome-browser-connector" "systemd-resolvconf" "noto-fonts-cjk" "obs-studio" "qbittorrent")
-	arch_Full_KDE=("steam" "wine" "gnome-disk-utility" "elisa" "plasma-workspace-wallpapers" "timeshift" "power-profiles-daemon" "xorg-mkfontscale" "xorg-fonts-cyrillic" "xorg-fonts-misc" "unrar" "gamemode" "terminus-font" "ttf-dejavu noto-fonts" "noto-fonts-extra" "ttf-liberation" "wqy-zenhei" "systemd-resolvconf" "noto-fonts-cjk" "obs-studio" "qbittorrent")
+	arch_Full_gnome=(steam wine resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk obs-studio qbittorrent)
+	arch_Full_KDE=(steam wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk obs-studio qbittorrent)
 
 	arch_Min_gnome=(wine resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk)
-	# ДА ,можно было без ковычек
+	
 	arch_Min_KDE=(wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra  ttf-liberation wqy-zenhei systemd-resolvconf noto-fonts-cjk)
 
 	arch_Full_noflat_gnome=(steam wine resources timeshift power-profiles-daemon xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc unrar gamemode terminus-font  ttf-dejavu noto-fonts noto-fonts-extra ttf-liberation wqy-zenhei gnome-browser-connector systemd-resolvconf noto-fonts-cjk)
@@ -160,6 +160,11 @@ cy=$"\033[0;36m"
 	endev_Min_noflat_gnome=( wine gnome-disk-utility gnome-backgrounds resources timeshift xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf gnome-browser-connector obs-studio qbittorrent)
 	endev_Min_noflat_KDE=(wine gnome-disk-utility elisa plasma-workspace-wallpapers timeshift discover xorg-mkfontscale xorg-fonts-cyrillic xorg-fonts-misc systemd-resolvconf obs-studio qbittorrent)
 	#endev
+
+	#Ubuntu
+	ubuntu_apps_apt=(python3-pyqt5 gnome-shell-extensions dosfstools mtools)
+	#Ubuntu
+
 
 #massAppList
 
@@ -1228,7 +1233,7 @@ function Ubuntu_setup
 	case $ubuntu_install_pak in
 		yes|y)
 			echo -e $or"Установка из apt..."$nc
-			sudo apt install python3-pyqt5
+			sudo apt install ${ubuntu_apps_apt[@]}
 			;;
 		*)
 			;;
