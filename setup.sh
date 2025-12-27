@@ -1,26 +1,12 @@
 #!/bin/bash
-# изменение 26.12.25 :
-#	(В работе скрипта)
-# 	Нет изменений 
-# 
-# 
-#   (Arch Linux)
-# Добавлен вопрос на установку plymouth
-#   
-# 
-#   (endeavoirOS)
-# 	Нет изменений
-# 
-#
-#	(Opensuse Tumbleweed) (Код заброшен)
-# 	Изменений нет 
+# изменение 27.12.25 :
 # !!!!скрипт может быть не рабочим в некоторых местах!!!!
 # в планах: 
-# добавить подержку ubuntu	
+# 	
 
 
 #vers
-ver="V2.3_26.12.25"
+ver="V2.4_27.12.25"
 ser="unstable"
 #vers
 
@@ -31,7 +17,7 @@ case $1 in
 			-g|--gnome)
 				#OS_fastfetch
 				function my_os {
-				fastfetch | grep -ohm1 "EndeavourOS\|openSUSE Tumbleweed\|Arch Linux"
+				fastfetch | grep -ohm1 "EndeavourOS\|openSUSE Tumbleweed\|Arch Linux\|Ubuntu"
 				}
 				OS=$(my_os)
 				#OS_fastfetch
@@ -44,7 +30,7 @@ case $1 in
 			-k|--kde)
 				#OS_fastfetch
 				function my_os {
-				fastfetch | grep -ohm1 "EndeavourOS\|openSUSE Tumbleweed\|Arch Linux"
+				fastfetch | grep -ohm1 "EndeavourOS\|openSUSE Tumbleweed\|Arch Linux\|Ubuntu"
 				}
 				OS=$(my_os)
 				#OS_fastfetch
@@ -63,7 +49,7 @@ case $1 in
 	-f|--fastfetch)
 		#OS_fastfetch
 		function my_os {
-		fastfetch | grep -ohm1 "EndeavourOS\|openSUSE Tumbleweed\|Arch Linux"
+		fastfetch | grep -ohm1 "EndeavourOS\|openSUSE Tumbleweed\|Arch Linux\|Ubuntu"
 		}
 		OS=$(my_os)
 		#OS_fastfetch
@@ -84,7 +70,7 @@ case $1 in
 				-g|--gnome)
 					#OS_lsb
 					function my_os {
-					lsb_release -a | grep -ohm1 "EndeavourOS Linux\|openSUSE Tumbleweed\|Arch Linux"
+					lsb_release -a | grep -ohm1 "EndeavourOS Linux\|openSUSE Tumbleweed\|Arch Linux\|Ubuntu"
 					}
 					OS=$(my_os)
 					#OS_lsb
@@ -97,7 +83,7 @@ case $1 in
 				-k|--kde)
 					#OS_lsb
 					function my_os {
-					lsb_release -a | grep -ohm1 "EndeavourOS Linux\|openSUSE Tumbleweed\|Arch Linux"
+					lsb_release -a | grep -ohm1 "EndeavourOS Linux\|openSUSE Tumbleweed\|Arch Linux\|Ubuntu"
 					}
 					OS=$(my_os)	
 					#OS_lsb
@@ -117,7 +103,7 @@ case $1 in
 	*|-lsb|--lsb-release)
 		#OS_lsb
 		function my_os {
-		lsb_release -a | grep -ohm1 "EndeavourOS Linux\|openSUSE Tumbleweed\|Arch Linux"
+		lsb_release -a | grep -ohm1 "EndeavourOS Linux\|openSUSE Tumbleweed\|Arch Linux\|Ubuntu"
 		}
 		OS=$(my_os)
 		#OS_lsb
@@ -140,6 +126,7 @@ esac
 pu=$"\033[0;35m"
 nc=$"\033[0m"
 ge=$"\033[0;32m"
+or=$"\033[33m"
 cy=$"\033[0;36m"
 #colors
 
@@ -1211,6 +1198,59 @@ esac
 }
 # arch
 
+#Ubuntu
+function Ubuntu_setup
+{
+	read -p "Привет $USER ,этот проект находится в разработке($ver,$ser,$OS_info)"
+	echo "И да, видать у тебя..."
+	echo -e $or"${OS}"$nc
+	read -p "c $DE"
+	read -p "Добавить подержку 32-битных программ&(yes/no)" ubuntu_add_32
+	read -p "Установить набор софта?(yes/no)" ubuntu_install_pak
+	read -p "Установить flatpak?(yes|no)" ubuntu_flat_inst
+	clear
+
+	#add_32
+	case $ubuntu_add_32 in
+		yes|y)
+			echo -e $or"Установка подержка 32 бит..."$nc
+			sudo dpkg --add-architecture i386
+			echo -e $or"Обновление apt..."$nc
+			sudo apt update
+			;;
+		*)
+			;;
+	esac
+	#add_32
+
+	#install_pak
+	case $ubuntu_install_pak in
+		yes|y)
+			echo -e $or"Установка из apt..."$nc
+			sudo apt install python3-pyqt5
+			;;
+		*)
+			;;
+	esac		
+	#install_pak
+
+	#install_flatpak
+	case $ubuntu_flat_inst in
+		yes|y)
+			echo -e $or"Установка из apt..."$nc
+			sudo apt install flatpak
+			echo -e $or"Добавление репозитория..."$nc
+			flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+			;;
+		*)
+			;;
+	esac		
+	#install_flatpak
+
+}
+#Ubuntu
+
+
 #install_apps
 case $OS in
 	EndeavourOS\ Linux|EndeavourOS)
@@ -1222,6 +1262,9 @@ case $OS in
 	Arch\ Linux)	
 			arch_install
 		;;
+	Ubuntu)
+			Ubuntu_setup
+		;;	
 	*)
 		echo "Ошибка определения дистрибутива"
 		echo "Рекомендуется установить lsb_release или fastfetch и запустить через ./setup.sh -f"
