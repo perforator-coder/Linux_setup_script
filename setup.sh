@@ -1205,7 +1205,8 @@ function Ubuntu_setup
 	echo "И да, видать у тебя..."
 	echo -e $or"${OS}"$nc
 	read -p "c $DE"
-	read -p "Добавить подержку 32-битных программ&(yes/no)" ubuntu_add_32
+	clear
+	read -p "Добавить подержку 32-битных программ?(yes/no)" ubuntu_add_32
 	read -p "Установить набор софта?(yes/no)" ubuntu_install_pak
 	read -p "Установить flatpak?(yes|no)" ubuntu_flat_inst
 	clear
