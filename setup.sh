@@ -6,13 +6,8 @@
 
 
 #vers
-<<<<<<< HEAD
-ver="V2.4_27.12.25"
-ser="testing"
-=======
 ver="V2.4_28.12.25"
 ser="testing"
->>>>>>> unstable
 #vers
 
 #petemen
