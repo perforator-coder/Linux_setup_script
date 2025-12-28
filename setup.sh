@@ -7,7 +7,7 @@
 
 #vers
 ver="V2.4_27.12.25"
-ser="unstable"
+ser="testing"
 #vers
 
 #petemen
