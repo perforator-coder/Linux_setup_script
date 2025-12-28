@@ -1,13 +1,18 @@
 #!/bin/bash
-# изменение 27.12.25 :
+# изменение 28.12.25 :
 # !!!!скрипт может быть не рабочим в некоторых местах!!!!
 # в планах: 
 # 	
 
 
 #vers
+<<<<<<< HEAD
 ver="V2.4_27.12.25"
 ser="testing"
+=======
+ver="V2.4_28.12.25"
+ser="testing"
+>>>>>>> unstable
 #vers
 
 #petemen
@@ -1037,7 +1042,7 @@ esac
 	case $arch_plym in
 		yes|y)
 			echo -e $cy"Установка из pacman..."$nc
-			sudo pacman -S plymouth --noconfirm
+			sudo pacman -S --needed plymouth --noconfirm
 			read -p "Что стоит для создания начального образа загрузки?(1-mkinitcpio,2-dracut)" arch_boot_sec
 			case $arch_boot_sec in
 				1)
@@ -1061,7 +1066,8 @@ esac
 
 				;;
 				2)
-					read -p "Нужно вставить в add_dracutmodules+= дополнительно plymouth...."
+					echo -e $cy"Нужно вставить в add_dracutmodules+= дополнительно plymouth...."$nc
+					read -p 'Если нет такой строчки и скрипт создает новый файл , то нужно вставить add_dracutmodules+=" plymouth "'
 					echo "Открываю /etc/dracut.conf.d/myflags.conf"
 					sudo nano /etc/dracut.conf.d/myflags.conf
 					read -p "Нужно изменить параметры загрузки ядра. Добавте в напротив GRUB_CMDLINE_LINUX_DEFAULT quiet splash"
