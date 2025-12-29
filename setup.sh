@@ -1213,6 +1213,7 @@ function Ubuntu_setup
 	read -p "c $DE"
 	clear
 	read -p "Добавить подержку 32-битных программ?(yes/no)" ubuntu_add_32
+	read -p "Установить zram-generator?(yes/no)" ubuntu_zram
 	read -p "Установить набор софта?(yes/no)" ubuntu_install_pak
 	read -p "Установить flatpak?(yes|no)" ubuntu_flat_inst
 	clear
@@ -1229,6 +1230,32 @@ function Ubuntu_setup
 			;;
 	esac
 	#add_32
+
+	#zram
+	case $ubuntu_zram in 
+		yes|y)
+			echo -e $or"Установка из apt..."$nc
+			sudo apt install systemd-zram-generator
+			echo "Нужно изменить конфиг zram-generator."
+			read -p "Для того чтобы был swap файл с размером половины ram вставте ниже [zram0] zram-size = ram / 2"
+			echo -e $or"Открываю /etc/systemd/zram-generator.conf"$nc
+			sudo nano /etc/systemd/zram-generator.conf
+			read -p "В ubuntu есть уже файл подкачки который занимает определеное количество gb. В fstab закоменируете строку со SWAP и после перезагрузки удалите файл подкачки в root директории."
+			read -p "Открыть fstab?(yes/no)" fstab_open
+			case $fstab_open in 
+				yes|y)
+					echo -e $or"Открываю /etc/fstab"$nc
+					sudo nano /etc/fstab
+					echo "После перезагрузки удалите старый файл подкачки"
+					;;
+				*)
+					;;
+			esac			
+			;;
+		no|n)
+			;;
+	esac			
+	#zram
 
 	#install_pak
 	case $ubuntu_install_pak in
