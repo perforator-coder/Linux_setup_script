@@ -1,12 +1,10 @@
 #!/bin/bash
-# изменение 29.12.25 :
-# !!!!скрипт может быть не рабочим в некоторых местах!!!!
-# в планах: 
-# 	
+# изменение 24.01.26 :
+# !!!!скрипт может быть не рабочим в некоторых местах!!!!	
 
 
 #vers
-ver="V2.4_29.12.25"
+ver="V2.4_24.01.26"
 ser="testing"
 #vers
 
@@ -313,24 +311,24 @@ case $DE in
 		case $endev_apps in
 			1)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S --needed ${endev_Full_gnome[@]} --noconfirm
+				sudo pacman -S --needed "${endev_Full_gnome[@]}" --noconfirm
 				yay -S yandex-browser
 				echo -e $pu"Установка из flatpak..."$nc
 				flatpak install  org.nickvision.tubeconverter  -y
 				;;
 			2)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S --needed ${endev_Min_gnome[@]} --noconfirm
+				sudo pacman -S --needed "${endev_Min_gnome[@]}" --noconfirm
 				yay -S gnome-browser-connector
 				;;
 			3)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S --needed ${endev_Full_noflat_gnome[@]} --noconfirm
+				sudo pacman -S --needed "${endev_Full_noflat_gnome[@]}" --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S --needed ${endev_Full_noflat_gnome[@]} --noconfirm
+				sudo pacman -S --needed "${endev_Min_noflat_gnome[@]}" --noconfirm
 				;;
 			*)
 				;;
@@ -340,25 +338,25 @@ case $DE in
 		case $endev_apps in
 			1)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S --needed ${endev_Full_KDE[@]} --noconfirm
+				sudo pacman -S --needed "${endev_Full_KDE[@]}" --noconfirm
 				yay -S yandex-browser
 				echo -e $pu"Установка из flatpak..."$nc
 				flatpak install org.nickvision.tubeconverter  -y
 				;;
 			2)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S --needed ${endev_Min_KDE[@]} --noconfirm
+				sudo pacman -S --needed "${endev_Min_KDE[@]}" --noconfirm
 				echo -e $pu"Установка из flatpak..."$nc
 				flatpak install org.nickvision.tubeconverter  -y
 				;;
 			3)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S --needed ${endev_Full_noflat_KDE[@]} --noconfirm
+				sudo pacman -S --needed "${endev_Full_noflat_KDE[@]}" --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $pu"Установка из pacman..."$nc
-				sudo pacman -S --needed ${endev_Min_noflat_KDE[@]} --noconfirm
+				sudo pacman -S --needed "${endev_Min_noflat_KDE[@]}" --noconfirm
 				;;
 			*)
 				;;
@@ -1120,23 +1118,23 @@ case $DE in
 		case $arch_apps in
 			1)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S --needed ${arch_Full_gnome[@]} --noconfirm
+				sudo pacman -S --needed "${arch_Full_gnome[@]}" --noconfirm
 				yay -S yandex-browser
 				echo -e $cy"Установка из flatpak..."$nc
 				flatpak install  org.nickvision.tubeconverter  -y
 				;;
 			2)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S --needed ${arch_Min_gnome[@]} --noconfirm
+				sudo pacman -S --needed "${arch_Min_gnome[@]}" --noconfirm
 				;;
 			3)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S --needed ${arch_Full_noflat_gnome[@]} --noconfirm
+				sudo pacman -S --needed "${arch_Full_noflat_gnome[@]}" --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S --needed ${arch_Min_noflat_gnome[@]} --noconfirm
+				sudo pacman -S --needed "${arch_Min_noflat_gnome[@]}" --noconfirm
 				;;
 			*)
 				;;
@@ -1146,7 +1144,7 @@ case $DE in
 		case $arch_apps in
 			1)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S --needed ${arch_Full_KDE[@]} --noconfirm
+				sudo pacman -S --needed "${arch_Full_KDE[@]}" --noconfirm
 				yay -S yandex-browser
 				echo -e $cy"Установка из flatpak..."$nc
 				flatpak install org.nickvision.tubeconverter -y
@@ -1154,18 +1152,18 @@ case $DE in
 			2)
 				echo -e $cy"Установка из pacman..."$nc
 				yay -S yandex-browser
-				sudo pacman -S --needed ${arch_Min_KDE[@]} --noconfirm
+				sudo pacman -S --needed "${arch_Min_KDE[@]}" --noconfirm
 				echo -e $cy"Установка из flatpak..."$nc
 				flatpak install  org.nickvision.tubeconverter  -y
 				;;
 			3)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S --needed ${arch_Full_noflat_KDE[@]} --noconfirm
+				sudo pacman -S --needed "${arch_Full_noflat_KDE[@]}" --noconfirm
 				yay -S yandex-browser
 				;;
 			4)
 				echo -e $cy"Установка из pacman..."$nc
-				sudo pacman -S --needed ${arch_Min_noflat_KDE[@]} --noconfirm
+				sudo pacman -S --needed "${arch_Min_noflat_KDE[@]}" --noconfirm
 				;;
 			*)
 				;;
@@ -1183,6 +1181,7 @@ case $arch_virtual in
 		echo -e $cy"Установка virtualbox..."$nc
 		sudo pacman -S --needed virtualbox virtualbox-guest-iso --noconfirm
 		sudo usermod -a -G vboxusers $USER
+		read -p "Установите в ручную headers"
 		;;
 	*)
 		;;
@@ -1261,7 +1260,7 @@ function Ubuntu_setup
 	case $ubuntu_install_pak in
 		yes|y)
 			echo -e $or"Установка из apt..."$nc
-			sudo apt install ${ubuntu_apps_apt[@]}
+			sudo apt install "${ubuntu_apps_apt[@]}"
 			;;
 		*)
 			;;
