@@ -1,10 +1,10 @@
 #!/bin/bash
-# изменение 24.01.26 :
+# изменение 08.02.26 :
 # !!!!скрипт может быть не рабочим в некоторых местах!!!!	
 
 
 #vers
-ver="V2.4_24.01.26"
+ver="V2.4_08.02.26"
 ser="testing"
 #vers
 
@@ -854,7 +854,7 @@ case $arch_fire in
 		;;
 	2)
 		echo -e $cy"Установка firewalld..."$nc
-		sudo pacman -S --needed firewalld --noconfirm
+		sudo pacman -S --needed firewalld firewall-applet --noconfirm
 		sudo systemctl enable firewalld
 		sudo systemctl start firewalld 
 		;;
